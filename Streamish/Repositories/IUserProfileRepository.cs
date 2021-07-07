@@ -5,6 +5,7 @@ namespace Streamish.Repositories
 {
     public interface IUserProfileRepository
     {
-        List<UserProfile> GetAll();
+        public List<UserProfile> GetAll();
+        public UserProfile GetById(int id);
     }
 }

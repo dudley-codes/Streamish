@@ -25,8 +25,7 @@ namespace Streamish.Repositories
                                             Email,
                                             ImageUrl,
                                             DateCreated
-                                        FROM UserProfile
-                                       ";
+                                        FROM UserProfile";
 
                     var reader = cmd.ExecuteReader();
 
@@ -50,5 +49,47 @@ namespace Streamish.Repositories
                 }
             }
         }
+
+        public UserProfile GetById(int id)
+        {
+            using (var conn = Connection) 
+            { 
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                                        SELECT Id,
+                                            Name,
+                                            Email,
+                                            ImageUrl,
+                                            DateCreated
+                                        FROM UserProfile
+                                        WHERE Id = @Id
+                                       ";
+                    DbUtils.AddParameter(cmd, "@Id", id);
+
+                    var reader = cmd.ExecuteReader();
+
+                    UserProfile user = null;
+
+                    if (reader.Read())
+                    {
+                        user = new UserProfile()
+                        {
+                            Id = DbUtils.GetInt(reader, "Id"),
+                            Name = DbUtils.GetString(reader, "Name"),
+                            Email = DbUtils.GetString(reader, "Email"),
+                            DateCreated = DbUtils.GetDateTime(reader, "DateCreated"),
+                            ImageUrl = DbUtils.GetString(reader, "ImageUrl")
+                        };
+                    }
+
+                    reader.Close();
+
+                    return user;
+                }
+            }
+        }
+
     }
 }

@@ -24,5 +24,16 @@ namespace Streamish.Controllers
         {
             return Ok(_userProfileRepository.GetAll());
         }
+
+        [HttpGet("{id}")]
+        public IActionResult Get(int id)
+        {
+            var user = _userProfileRepository.GetById(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            return Ok(user);
+        }
     }
 }
