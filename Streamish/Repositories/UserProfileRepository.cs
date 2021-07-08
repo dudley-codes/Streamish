@@ -153,5 +153,67 @@ namespace Streamish.Repositories
                 }
             }
         }
+
+        public UserProfile GetUserByIdWithVideos(int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"SELECT u.Id AS UserId, 
+		                                        u.Name AS UserName, 
+		                                        u.DateCreated AS UserCreatedDate,
+		                                        u.Email,
+		                                        u.ImageUrl,
+		                                        v.Id AS VideoId,
+		                                        v.DateCreated,
+		                                        v.Title,
+		                                        v.Url,
+		                                        v.Description
+                                        FROM UserProfile u
+		                                        LEFT JOIN Video v ON v.UserProfileId = u.Id
+		                                        WHERE u.Id = @Id
+                                        ORDER BY v.DateCreated";
+
+                    DbUtils.AddParameter(cmd, "@Id", id);
+
+                    var reader = cmd.ExecuteReader();
+                    UserProfile user = null;
+                    while (reader.Read())
+                    {
+                        var userId = DbUtils.GetInt(reader, "UserId");
+
+                        if(user == null)
+                        {
+                            user = new UserProfile()
+                            {
+                                Id = id,
+                                Name = DbUtils.GetString(reader, "UserName"),
+                                Email = DbUtils.GetString(reader, "Email"),
+                                DateCreated = DbUtils.GetDateTime(reader, "UserCreatedDate"),
+                                ImageUrl = DbUtils.GetString(reader, "ImageUrl"),
+                                Videos = new List<Video>()
+                            };
+                        };
+
+                        if(DbUtils.IsNotDbNull(reader, "VideoId"))
+                        {
+                            user.Videos.Add(new Video()
+                            {
+                                Id = DbUtils.GetInt(reader, "VideoId"),
+                                DateCreated = DbUtils.GetDateTime(reader, "DateCreated"),
+                                Title = DbUtils.GetString(reader, "Title"),
+                                Url = DbUtils.GetString(reader, "Url"),
+                                Description = DbUtils.GetString(reader, "Description")
+                            });
+                        }
+                    }
+
+                    reader.Close();
+                    return user;
+                }
+            }
+        }
     }
 }

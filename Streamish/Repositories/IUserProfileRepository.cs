@@ -10,5 +10,6 @@ namespace Streamish.Repositories
         void Add(UserProfile user);
         void Update(UserProfile user);
         void Delete(int id);
+        public UserProfile GetUserByIdWithVideos(int id);
     }
 }
