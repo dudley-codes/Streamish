@@ -114,5 +114,30 @@ namespace Streamish.Repositories
                 }
             }
         }
+
+        public void Update(UserProfile user)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"UPDATE UserProfile
+		                                SET Name = @name,
+			                                DateCreated = @dateCreated,
+			                                Email = @email,
+			                                ImageUrl = @imageUrl
+		                                WHERE Id = @id;";
+
+                    DbUtils.AddParameter(cmd, "@name", user.Name);
+                    DbUtils.AddParameter(cmd, "@dateCreated", user.DateCreated);
+                    DbUtils.AddParameter(cmd, "@email", user.Email);
+                    DbUtils.AddParameter(cmd, "@imageUrl", user.ImageUrl);
+                    DbUtils.AddParameter(cmd, "@id", user.Id);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
     }
 }

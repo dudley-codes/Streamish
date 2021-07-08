@@ -43,5 +43,17 @@ namespace Streamish.Controllers
             _userProfileRepository.Add(user);
             return CreatedAtAction("Get", new { id = user.Id }, user);
         }
+
+        [HttpPut("{id}")]
+        public IActionResult Put(int id, UserProfile user)
+        {
+            if(id != user.Id)
+            {
+                return BadRequest();
+            }
+
+            _userProfileRepository.Update(user);
+            return NoContent();
+        }
     }
 }
