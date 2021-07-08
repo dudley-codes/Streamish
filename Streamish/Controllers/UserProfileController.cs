@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Streamish.Models;
 using Streamish.Repositories;
 using System;
 using System.Collections.Generic;
@@ -34,6 +35,13 @@ namespace Streamish.Controllers
                 return NotFound();
             }
             return Ok(user);
+        }
+
+        [HttpPost]
+        public IActionResult Post(UserProfile user)
+        {
+            _userProfileRepository.Add(user);
+            return CreatedAtAction("Get", new { id = user.Id }, user);
         }
     }
 }

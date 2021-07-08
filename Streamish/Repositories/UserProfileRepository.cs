@@ -52,8 +52,8 @@ namespace Streamish.Repositories
 
         public UserProfile GetById(int id)
         {
-            using (var conn = Connection) 
-            { 
+            using (var conn = Connection)
+            {
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
@@ -91,5 +91,28 @@ namespace Streamish.Repositories
             }
         }
 
+        public void Add(UserProfile user)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                                        INSERT INTO UserProfile 
+                                            (Name, Email, DateCreated, ImageUrl)
+                                            OUTPUT INSERTED.ID
+                                        VALUES (@name, @email, @dateCreated, @imageUrl)
+                                        ";
+
+                    DbUtils.AddParameter(cmd, "@name", user.Name);
+                    DbUtils.AddParameter(cmd, "@email", user.Email);
+                    DbUtils.AddParameter(cmd, "@dateCreated", user.DateCreated);
+                    DbUtils.AddParameter(cmd, "@imageUrl", user.ImageUrl);
+
+                    user.Id = (int)cmd.ExecuteScalar();
+                }
+            }
+        }
     }
 }
