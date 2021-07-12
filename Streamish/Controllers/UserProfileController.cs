@@ -63,10 +63,10 @@ namespace Streamish.Controllers
             return NoContent();
         }
 
-        [HttpGet("GetUserByIdWithVideos")]
-        public IActionResult GetUserByIdWithVideos(int id)
+        [HttpGet("GetUserVideos/{id}")]
+        public IActionResult GetUserVideos(int id)
         {
-            var user = _userProfileRepository.GetUserByIdWithVideos(id);
+            var user = _userProfileRepository.GetUserVideos(id);
             return Ok(user);
         }
     }

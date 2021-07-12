@@ -33,3 +33,8 @@ export const getVideo = (id) => {
   return fetch(`${ baseUrl }/GetVideoByIdWithComments/${ id }`).then((res) => res.json());
 };
 
+// fetch all videos by user
+export const getUserVideos = (id) => {
+  return fetch(`/api/UserProfile/GetUserVideos/${ id }`)
+    .then((res) => res.json());
+};

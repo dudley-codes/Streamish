@@ -4,6 +4,7 @@ import VideoList from "./VideoList";
 import VideoForm from "./VideoForm";
 import VideoDetails from "./VideoDetails";
 import SearchBar from "./SearchBar";
+import UserVideos from "./UserVideos";
 
 const ApplicationViews = () => {
   return (
@@ -26,7 +27,7 @@ const ApplicationViews = () => {
       </Route>
 
       <Route path="/users/:id">
-        {/* <UserVideos /> */ }
+        <UserVideos />
       </Route>
     </Switch>
   );

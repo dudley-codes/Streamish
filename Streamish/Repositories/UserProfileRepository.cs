@@ -154,7 +154,7 @@ namespace Streamish.Repositories
             }
         }
 
-        public UserProfile GetUserByIdWithVideos(int id)
+        public UserProfile GetUserVideos(int id)
         {
             using (var conn = Connection)
             {
