@@ -6,8 +6,7 @@ const Video = ({ video }) => {
   const VideoComments = (prop) => {
     const comments = video.comments;
 
-    console.log("comments", comments[ 0 ])
-    const commentsList = comments.map((comment) =>
+    const commentsList = comments?.map((comment) =>
       <li key={ comment.id }>
         { comment.message }
       </li>
