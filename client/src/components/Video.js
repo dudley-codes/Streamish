@@ -2,7 +2,7 @@ import React from "react";
 import { Card, CardBody } from "reactstrap";
 import { Link } from "react-router-dom";
 
-const Video = ({ video }) => {
+const Video = ({ video, user }) => {
 
   const VideoComments = (prop) => {
     const comments = video.comments;
@@ -22,7 +22,11 @@ const Video = ({ video }) => {
 
   return (
     <Card >
-      <p className="text-left px-2">Posted by: { video.userProfile.name }</p>
+      <p className="text-left px-2">Posted by:
+        <Link to={ `/users/${ user.id }` }>
+          <strong>{ user.name }</strong>
+        </Link>
+      </p>
       <CardBody>
         <iframe className="video"
           src={ video.url }
@@ -43,6 +47,5 @@ const Video = ({ video }) => {
     </Card>
   );
 };
-
 
 export default Video;
