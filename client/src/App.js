@@ -1,19 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { BrowserRouter as Router } from "react-router-dom";
 import "./App.css";
-import VideoList from "./components/VideoList";
+import ApplicationViews from "./components/ApplicationViews";
+import Header from "./components/Header";
 
 function App() {
-  const { search } = window.location;
-  const query = new URLSearchParams(search).get('q');
-
-  const [ searchQuery, setSearchQuery ] = useState(query || '');
-  console.log('searchquery', searchQuery)
   return (
     <div className="App">
-      <VideoList
-        searchQuery={ searchQuery }
-        setSearchQuery={ setSearchQuery }
-      />
+      <Router>
+        <Header />
+        <ApplicationViews />
+      </Router>
     </div>
   );
 }

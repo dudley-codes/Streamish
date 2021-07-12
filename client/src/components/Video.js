@@ -1,5 +1,6 @@
 import React from "react";
 import { Card, CardBody } from "reactstrap";
+import { Link } from "react-router-dom";
 
 const Video = ({ video }) => {
 
@@ -34,6 +35,9 @@ const Video = ({ video }) => {
           <strong>{ video.title }</strong>
         </p>
         <p>{ video.description }</p>
+        <Link to={ `/videos/${ video.id }` }>
+          <strong>{ video.title }</strong>
+        </Link>
         <VideoComments />
       </CardBody>
     </Card>
