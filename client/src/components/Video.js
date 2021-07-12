@@ -15,7 +15,6 @@ const Video = ({ video }) => {
 
     return (
       <>
-        { console.log('comments list', commentsList) }
         <ul>{ commentsList }</ul>
       </>
     )
