@@ -1,21 +1,28 @@
 import React, { useEffect, useState } from "react";
 import Video from './Video';
-import { getAllVideos, getAllVideosWithComments } from "../modules/videoManager";
+import { getAllVideos, getAllVideosWithComments, getSearchResults } from "../modules/videoManager";
 import SearchBar from "./SearchBar";
 
 const VideoList = ({ searchQuery, setSearchQuery }) => {
   const [ videos, setVideos ] = useState([]);
 
-  const getVideos = () => {
-    getAllVideos().then(videos => setVideos(videos));
-  };
 
-  const getVideosWithComments = () => {
-    getAllVideosWithComments().then(videos => setVideos(videos));
-  };
+
+  console.log('is it null', searchQuery)
+  const renderVideos = () => {
+    if (searchQuery === '') {
+      return getAllVideosWithComments().then(videos => setVideos(videos))
+    } else {
+      return getSearchResults(searchQuery).then(videos => setVideos(videos))
+    }
+  }
+
+
+
+
 
   useEffect(() => {
-    getVideosWithComments();
+    renderVideos();
   }, []);
 
   return (

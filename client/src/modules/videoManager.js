@@ -13,8 +13,8 @@ export const getAllVideosWithComments = () => {
 };
 
 //fetch videos that match search criteria
-export const getSearchResults = (search, bool) => {
-  return fetch(`/api/video/search?q=${ search }&sortDesc=${ bool }`)
+export const getSearchResults = (search) => {
+  return fetch(`/api/video/search?q=${ search }`)
     .then((res) => res.json())
 };
 

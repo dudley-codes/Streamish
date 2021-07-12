@@ -3,11 +3,11 @@ import "./App.css";
 import VideoList from "./components/VideoList";
 
 function App() {
-  const { search } = '/api/video/search';
-  console.log('window location', search)
+  const { search } = window.location;
   const query = new URLSearchParams(search).get('q');
-  const [ searchQuery, setSearchQuery ] = useState(query || '');
 
+  const [ searchQuery, setSearchQuery ] = useState(query || '');
+  console.log('searchquery', searchQuery)
   return (
     <div className="App">
       <VideoList
