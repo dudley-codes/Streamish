@@ -278,7 +278,7 @@ namespace Streamish.Repositories
                                 UserProfileId = DbUtils.GetInt(reader, "VideoUserProfileId"),
                                 UserProfile = new UserProfile()
                                 {
-                                    Id = DbUtils.GetInt(reader, "CommentUserProfileId"),
+                                    Id = DbUtils.GetInt(reader, "VideoUserProfileId"),
                                     Name = DbUtils.GetString(reader, "Name"),
                                     Email = DbUtils.GetString(reader, "Email"),
                                     DateCreated = DbUtils.GetDateTime(reader, "UserProfileDateCreated"),

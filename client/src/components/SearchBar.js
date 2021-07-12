@@ -3,8 +3,8 @@ import { useHistory } from 'react-router-dom';
 const SearchBar = ({ searchQuery, setSearchQuery }) => {
   const history = useHistory();
   const onSubmit = (e) => {
-    history.push(`/api/video/search?q=${ searchQuery }`);
-    e.preventDefault();
+    history.push(`/search?q=${ searchQuery }`).then(() => { searchQuery = '' })
+    e.preventDefault()
   };
 
   return (

@@ -27,3 +27,9 @@ export const addVideo = (video) => {
     body: JSON.stringify(video),
   });
 };
+
+//fetch single video by ID
+export const getVideo = (id) => {
+  return fetch(`${ baseUrl }/GetVideoByIdWithComments/${ id }`).then((res) => res.json());
+};
+
