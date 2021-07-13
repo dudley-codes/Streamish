@@ -50,7 +50,7 @@ namespace Streamish.Repositories
             }
         }
 
-        public UserProfile GetById(int id)
+        public UserProfile GetByFirebaseId(string FirebaseUserId)
         {
             using (var conn = Connection)
             {
@@ -59,14 +59,15 @@ namespace Streamish.Repositories
                 {
                     cmd.CommandText = @"
                                         SELECT Id,
+                                            FireBaseUserId,
                                             Name,
                                             Email,
                                             ImageUrl,
                                             DateCreated
                                         FROM UserProfile
-                                        WHERE Id = @Id
+                                        WHERE FireBaseUserId = @FireBaseUserId
                                        ";
-                    DbUtils.AddParameter(cmd, "@Id", id);
+                    DbUtils.AddParameter(cmd, "@FireBaseUserId", FirebaseUserId);
 
                     var reader = cmd.ExecuteReader();
 
@@ -77,6 +78,7 @@ namespace Streamish.Repositories
                         user = new UserProfile()
                         {
                             Id = DbUtils.GetInt(reader, "Id"),
+                            FirebaseUserId = DbUtils.GetString(reader, "FirebaseUserId"),
                             Name = DbUtils.GetString(reader, "Name"),
                             Email = DbUtils.GetString(reader, "Email"),
                             DateCreated = DbUtils.GetDateTime(reader, "DateCreated"),
@@ -100,11 +102,11 @@ namespace Streamish.Repositories
                 {
                     cmd.CommandText = @"
                                         INSERT INTO UserProfile 
-                                            (Name, Email, DateCreated, ImageUrl)
+                                            (FireBaseUserId, Name, Email, DateCreated, ImageUrl)
                                             OUTPUT INSERTED.ID
-                                        VALUES (@name, @email, @dateCreated, @imageUrl)
+                                        VALUES (@FireBaseUserId, @name, @email, @dateCreated, @imageUrl)
                                         ";
-
+                    DbUtils.AddParameter(cmd, "@FireBaseUserId", user.FirebaseUserId);
                     DbUtils.AddParameter(cmd, "@name", user.Name);
                     DbUtils.AddParameter(cmd, "@email", user.Email);
                     DbUtils.AddParameter(cmd, "@dateCreated", user.DateCreated);
